@@ -8,11 +8,11 @@ import logging
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Twitter API credentials (replace with your own)
-twitter_consumer_key = 'Your_Consumer_Key'
-twitter_consumer_secret = 'Your_Consumer_Secret'
-twitter_access_token = 'Your_Access_Token'
-twitter_access_token_secret = 'Your_Access_Token_Secret'
+# Twitter API credentials 
+twitter_consumer_key = 'Consumer_Key'
+twitter_consumer_secret = 'Consumer_Secret'
+twitter_access_token = 'Access_Token'
+twitter_access_token_secret = 'Access_Token_Secret'
 
 # Authenticate to Twitter
 try:
