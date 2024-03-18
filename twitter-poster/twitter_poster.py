@@ -1,16 +1,31 @@
 import tweepy
 import schedule
 import time
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Twitter API credentials 
-consumer_key = 'Consumer_Key'
-consumer_secret = 'Consumer_Secret'
-access_token = 'Access_Token'
-access_token_secret = 'Access_Token_Secret'
+twitter_consumer_key = 'Consumer_Key'
+twitter_consumer_secret = 'Consumer_Secret'
+twitter_access_token = 'Access_Token'
+twitter_access_token_secret = 'Access_Token_Secret'
 
 # Authenticate to Twitter
-auth = tweepy.OAuth1UserHandler(consumer_key, consumer_secret, access_token, access_token_secret)
-api = tweepy.API(auth)
+try:
+    twitter_auth = tweepy.OAuth1UserHandler(twitter_consumer_key, twitter_consumer_secret, twitter_access_token, twitter_access_token_secret)
+    twitter_api = tweepy.API(twitter_auth)
+    logging.info("Twitter authentication successful.")
+except Exception as e:
+    logging.error(f"Failed to authenticate with Twitter API: {e}")
+
+# Define message templates
+message_templates = {
+    "morning": "Good morning, world! 🌅",
+    "afternoon": "Afternoon folks! 🌞",
+    "evening": "Good evening everyone! 🌙"
+}
 
 def post_tweet(message):
     """
@@ -19,13 +34,16 @@ def post_tweet(message):
     Parameters:
         message (str): The text content of the tweet.
     """
-    api.update_status(message)
-    print("Tweet posted:", message)
+    try:
+        twitter_api.update_status(message)
+        logging.info("Tweet posted on Twitter: %s", message)
+    except tweepy.TweepError as e:
+        logging.error("Failed to post tweet on Twitter: %s", e)
 
 # Schedule your tweets
-schedule.every().day.at("10:00").do(post_tweet, "Good morning, world!")
-schedule.every().day.at("15:00").do(post_tweet, "Afternoon folks!")
-schedule.every().day.at("20:00").do(post_tweet, "Good evening everyone!")
+schedule.every().day.at("10:00").do(post_tweet, message_templates["morning"])
+schedule.every().day.at("15:00").do(post_tweet, message_templates["afternoon"])
+schedule.every().day.at("20:00").do(post_tweet, message_templates["evening"])
 
 # Keep the program running
 while True:
