@@ -8,7 +8,7 @@ import logging
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Facebook API credentials (replace with your own)
+# Facebook API credentials 
 facebook_access_token = 'Facebook_Access_Token'
 
 # Create a Facebook Graph API object
